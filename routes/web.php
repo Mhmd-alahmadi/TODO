@@ -10,13 +10,6 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
+Route::get('userTask/{user_id}','Relation\RelationsController@all') -> name ('doctor.services');
 
-Route::get('/', function () {
-    return view('welcome');
-});
-
-Auth::routes(['verify'=>true]);
-
-Route::get('/home', 'HomeController@index')->name('home') -> middleware('verified');
-
-
+Route::get('delete/{user_id}','Relation\RelationsController@delete')->name('task.delete');
