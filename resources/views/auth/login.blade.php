@@ -8,16 +8,16 @@
                 <div class="card-header">{{ __('Login') }}</div>
 
                 <div class="card-body">
-
+                    <img src="/Images/todo.png" class="img-fluid">
                     <form method="POST" action="{{ route('login') }}">
                         @csrf
 
-                        <img src="Images/todo.png" class="img-fluid" alt="Responsive image">
                         <div class="form-group row">
 
                             <label for="email" class="col-md-4 col-form-label text-md-right">identify</label>
                             <div class="col-md-6">
                                 <input id="identify" type="text" class="form-control @error('identify') is-invalid @enderror" name="identify" value="{{ old('identify') }}" required  >
+
                                 @error('identify')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
