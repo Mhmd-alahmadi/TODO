@@ -30,12 +30,12 @@ Route::group(['prefix' =>LaravelLocalization::setLocale(),
     'middleware' => [ 'localeSessionRedirect', 'localizationRedirect', 'localeViewPath','auth','verified']
 ], function () {
 
-    Route::get('/home', 'HomeController@index')->name('home') ;
+
 
 
 
     Route::group([  'prefix' => 'task'],function (){ //'middleware' => '',
-
+        Route::get('user', 'Relation\RelationsController@getTask')->name('home') ;
         Route::get('/', [TaskController::class, 'get'])-> name('task.get');
         Route::get('create',[TaskController::class, 'create'])-> name('task.create');
 //        Route::post('store','TaskController@store')->name('task.store');
@@ -46,5 +46,6 @@ Route::group(['prefix' =>LaravelLocalization::setLocale(),
             Route::put('update', [TaskController::class,'update'])->name('task.update');
             Route::delete('delete', [TaskController::class,'delete'])->name('task.delete');
         });
+        Route::post('checkedUserTask/{task_id}','Relation\RelationsController@postIndex') -> name ('send.type');
     });
 });
