@@ -15,5 +15,10 @@ return [
 
     'previous' => '&laquo; Previous',
     'next' => 'Next &raquo;',
+    "Add your task" => 'Add your task',
+    "Task Name"=> 'Task Name',
+    "Enter Offer Name"=> 'Enter Offer Name',
+    "Save task" => 'Save',
+    "task.message.success" =>'Task Added Successfully'
 
 ];

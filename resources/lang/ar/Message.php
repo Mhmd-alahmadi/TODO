@@ -15,5 +15,10 @@ return [
 
     'previous' => '',
     'next' => 'Next &raquo;',
-
+    "Add your task" => 'اضف مهمه',
+    "Task Name"=> 'اسم المهمه',
+    "Enter Offer Name"=> 'ادخل اسم المهمه',
+    "Save task" => 'حفظ',
+    "task.message.success" => 'تم اضافة المهمه بنجاح'
+    
 ];

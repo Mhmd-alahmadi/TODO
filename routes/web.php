@@ -10,15 +10,41 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
+use App\Http\Controllers\TaskController;
 
 Route::get('/', function () {
     return view('welcome');
 });
-
+//
+//Auth::routes(['verify'=>true]);
+//
+//Route::get('/home', 'HomeController@index')->name('home') -> middleware('verified');
+//
+//
+//Route::get('/home', 'HomeController@index')->name('home') -> middleware('verified');
 Auth::routes(['verify'=>true]);
 
-Route::get('/home', 'HomeController@index')->name('home') -> middleware('verified');
 
 
-Route::get('/home', 'HomeController@index')->name('home') -> middleware('verified');
+Route::group(['prefix' =>LaravelLocalization::setLocale(),
+    'middleware' => [ 'localeSessionRedirect', 'localizationRedirect', 'localeViewPath','auth','verified']
+], function () {
 
+    Route::get('/home', 'HomeController@index')->name('home') ;
+
+
+
+    Route::group([  'prefix' => 'task'],function (){ //'middleware' => '',
+
+        Route::get('/', [TaskController::class, 'get'])-> name('task.get');
+        Route::get('create',[TaskController::class, 'create'])-> name('task.create');
+//        Route::post('store','TaskController@store')->name('task.store');
+        Route::post('store',[TaskController::class,'store'])->name('task.store');
+
+        Route::group(['prefix' => '{id}'], function() {
+
+            Route::put('update', [TaskController::class,'update'])->name('task.update');
+            Route::delete('delete', [TaskController::class,'delete'])->name('task.delete');
+        });
+    });
+});

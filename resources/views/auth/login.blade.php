@@ -9,6 +9,10 @@
 
                     <div class="card-body">
 
+                        @error('email')
+                            <div class="alert alert-danger text-center">{{$message}}</div>
+                        @enderror
+
                         <form method="POST" action="{{ route('login') }}">
                             @csrf
 
