@@ -41,11 +41,18 @@ Route::group(['prefix' =>LaravelLocalization::setLocale(),
 //        Route::post('store','TaskController@store')->name('task.store');
         Route::post('store',[TaskController::class,'store'])->name('task.store');
 
-        Route::group(['prefix' => '{id}'], function() {
 
-            Route::put('update', [TaskController::class,'update'])->name('task.update');
-            Route::delete('delete', [TaskController::class,'delete'])->name('task.delete');
+
+
+        Route::group(['prefix' => '{task_id}'], function() {
+
+//            Route::put('update', [TaskController::class,'update'])->name('task.update');
+//            Route::delete('delete', [TaskController::class,'delete'])->name('task.delete');
+            Route::get('delete','Relation\RelationsController@delete')->name('task.delete');
+            Route::get('edit','Relation\RelationsController@editTask')->name('task.edit');
+            Route::post('update','Relation\RelationsController@updateTask')->name('task.update');
         });
         Route::post('checkedUserTask/{task_id}','Relation\RelationsController@postIndex') -> name ('send.type');
     });
+
 });

@@ -60,6 +60,21 @@
             <div class="title m-b-md">
                 The Task
             </div>
+
+            @if(Session::has('success'))
+                <div class="alert alert-success">
+                    {{Session::get('success')}}
+                </div>
+
+            @endif
+
+            @if(Session::has('error'))
+                <div class="alert alert-danger">
+                    {{Session::get('error')}}
+                </div>
+            @endif
+
+
             <table class="table">
                 <thead>
                 <tr>
@@ -75,14 +90,17 @@
                     <th scope="row">{{$task -> id}}</th>
 
                     <td style="text-decoration: {{$task->type == 1 ? $s= 'line-through':''}}">{{$task-> name}}</td>
-                    <td><a  type="button" class="btn btn-info">update</a>
-                        <a type="button" class="btn btn-danger">Delete</a>
-                        <form style="display: inline;" method="post" action="{{route('send.type',$task->id)}}">
+                    <td><a href="{{route('task.edit',$task -> id)}}" type="button" class="btn btn-info">update</a>
+                        <a href="{{route('task.delete',$task -> id)}}"  class="delete_btn   btn btn-danger">Delete</a>
+                         <form style="display: inline;" method="post" action="{{route('send.type',$task->id)}}">
                             @csrf
                             <button  type="submit" class="btn btn-warning">State</button>
                         </form>
-                </tr>
                     </td>
+
+                     
+                </tr>
+
 
 
                 @endforeach
