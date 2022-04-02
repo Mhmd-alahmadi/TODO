@@ -5,9 +5,11 @@ namespace App\Http\Controllers\Relation;
 use App\Http\Controllers\Controller;
 use App\Models\Task;
 use App\Models\User;
-
 use Illuminate\Http\Request;
+use App\Http\Requests\TaskRequest;
 use Symfony\Component\Console\Input\Input;
+use Illuminate\Support\Facades\Validator;
+use LaravelLocalization;
 
 class RelationsController extends Controller
 {
@@ -16,7 +18,7 @@ class RelationsController extends Controller
         $users = User::find(auth()->id());
 
         $tasks = $users->tasks;
-        return view('task.task', compact('tasks'));
+        return view('home', compact('tasks'));
     }
 
     public function postIndex($task_id)
@@ -52,21 +54,14 @@ class RelationsController extends Controller
     {
 
 
-//        $task = $request->all();
-//        Task::find($task_id)->update('task');
-
-//        return redirect()->back()->with(['success' => 'deleteed sucesfully']);
         $task = Task::find($request->task_id);
         if (!$task) {
             return redirect()->back()->with(['error' => 'task not updated']);
         }
-
         //update
         $task->update(['name' => $request->name]);
 
-//        $task ->update($request ->task_name); //way 1 to updaTE ALL
-//
-        return redirect('/task/user')->with(['success' => 'تم التحديث بنجاح']);
+        return redirect('/home')->with(['success' => 'تم التحديث بنجاح']);
     }
 
     public function delete($task_id)
@@ -80,6 +75,26 @@ class RelationsController extends Controller
         return redirect()->back()->with(['success' => 'deleteed sucesfully']);
 
     }
+    public function get(Request  $request) {
 
+        return view('task.view');
+    }
+
+    public function create(Request  $request)
+    {
+
+        return view('task.create');
+    }
+
+    public function store(TaskRequest $request)
+    {
+
+        Task::create([
+            'name' => $request->name,
+            'user_id' => auth()->id()
+        ]);
+//        return redirect()->back()->with(['success' => __('task.messages.success')]);
+        return redirect('home')->with(['success' => 'تم الاضافة بنجاح']);
+    }
 
 }

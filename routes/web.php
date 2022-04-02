@@ -10,49 +10,34 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
-use App\Http\Controllers\TaskController;
 
+//use App\Http\Controllers\TaskController;
+use App\Http\Controllers\Relation\RelationsController;
+// this Route take you to the first page
 Route::get('/', function () {
     return view('welcome');
 });
-//
-//Auth::routes(['verify'=>true]);
-//
-//Route::get('/home', 'HomeController@index')->name('home') -> middleware('verified');
-//
-//
-//Route::get('/home', 'HomeController@index')->name('home') -> middleware('verified');
-Auth::routes(['verify'=>true]);
+// this Route for turn on the verified
+Auth::routes(['verify' => true]);
 
-
-
-Route::group(['prefix' =>LaravelLocalization::setLocale(),
-    'middleware' => [ 'localeSessionRedirect', 'localizationRedirect', 'localeViewPath','auth','verified']
+// this Route for all of main operations and embed the mcamara  and auth
+Route::group(['prefix' => LaravelLocalization::setLocale(),
+    'middleware' => ['localeSessionRedirect', 'localizationRedirect', 'localeViewPath', 'auth', 'verified']
 ], function () {
+// this Route take youy to main page and for getting all tasks
+    Route::get('home', 'Relation\RelationsController@getTask')->name('home');
 
-
-
-
-
-    Route::group([  'prefix' => 'task'],function (){ //'middleware' => '',
-        Route::get('user', 'Relation\RelationsController@getTask')->name('home') ;
-        Route::get('/', [TaskController::class, 'get'])-> name('task.get');
-        Route::get('create',[TaskController::class, 'create'])-> name('task.create');
-//        Route::post('store','TaskController@store')->name('task.store');
-        Route::post('store',[TaskController::class,'store'])->name('task.store');
-
-
-
-
-        Route::group(['prefix' => '{task_id}'], function() {
-
-//            Route::put('update', [TaskController::class,'update'])->name('task.update');
-//            Route::delete('delete', [TaskController::class,'delete'])->name('task.delete');
-            Route::get('delete','Relation\RelationsController@delete')->name('task.delete');
-            Route::get('edit','Relation\RelationsController@editTask')->name('task.edit');
-            Route::post('update','Relation\RelationsController@updateTask')->name('task.update');
+// this group for ctreate new task and store
+    Route::group(['prefix' => 'task'], function () {
+        Route::get('/', [RelationsController::class, 'get'])->name('task.get');
+        Route::get('create', [RelationsController::class, 'create'])->name('task.create');
+        Route::post('store', [RelationsController::class, 'store'])->name('task.store');
+        // this group for delete update  insert and getting the complete task
+        Route::group(['prefix' => '{task_id}'], function () {
+            Route::get('delete', [RelationsController::class, 'delete'])->name('task.delete');
+            Route::get('edit', [RelationsController::class, 'editTask'])->name('task.edit');
+            Route::post('update', [RelationsController::class, 'updateTask'])->name('task.update');
+            Route::post('checkedUserTask', [RelationsController::class,'postIndex'])->name('send.type');
         });
-        Route::post('checkedUserTask/{task_id}','Relation\RelationsController@postIndex') -> name ('send.type');
     });
-
 });

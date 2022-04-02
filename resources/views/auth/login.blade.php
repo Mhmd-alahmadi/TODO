@@ -13,7 +13,7 @@
                             <div class="alert alert-danger text-center">{{$message}}</div>
                         @enderror
 
-                        <form method="POST" action="{{ route('home') }}">
+                        <form method="POST" action="{{ route('login') }}">
                             @csrf
 
                             <img src="Images/todo.png" class="img-fluid" alt="Responsive image">
