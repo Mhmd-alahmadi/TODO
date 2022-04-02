@@ -39,6 +39,7 @@ class TaskController extends Controller
             'name' => $request->name,
            'user_id' => auth()->id()
         ]);
-        return redirect()->back()->with(['success' => __('task.messages.success')]);
+//        return redirect()->back()->with(['success' => __('task.messages.success')]);
+        return redirect('/task/user')->with(['success' => 'تم الاضافة بنجاح']);
     }
 }
